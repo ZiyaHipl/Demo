@@ -8,8 +8,12 @@ import {
     FlatList,
     ActivityIndicator,
     RefreshControl,
-    TextInput
+    Image
 } from 'react-native';
+import Helper from './Component/Lib/Helper';
+import NetInfo from "@react-native-community/netinfo";
+import AlertMsg from './Component/Lib/AlertMsg';
+import LoadImage from './Component/Lib/LoadImage';
 
 const Home2 = ({ navigation }) => {
     const [loading, setLoading] = useState(true);
@@ -22,25 +26,38 @@ const Home2 = ({ navigation }) => {
         setIsRefreshing(true)
         getData(false)
     }
-    
+
     useEffect(() => {
         getData()
     }, [navigation]);
+
+
     const getData = () => {
-        console.log('getData');
-        setLoading(false);
-        fetch(`http://universities.hipolabs.com/search?country=india`)
-            .then((response) => response.json())
-            .then((responseJson) => {
-                console.log('responseJsonresponseJson', responseJson);
-                setDataSource(responseJson);
-                setIsRefreshing(false)
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    };
+        NetInfo.fetch().then(state => {
+            if (!state.isConnected) {
+                Helper.showToast(AlertMsg.error.INTERNET_CONNECTION);
+                return false;
+            } else {
+                {
+                    Helper.globalLoader.showLoader()
+                    Helper.makeRequest({ url: 'https://dummyjson.com/products', method: "GET" }).then((response) => {
+                        // if (response.status == 200) {
+                        setDataSource(response.products)
+                        setIsRefreshing(false)
+                        Helper.globalLoader.hideLoader()
+                        // }
+                        // else {
+                        //     Helper.globalLoader.hideLoader()
+                        //     Helper.showToast(response.message);
+                        // }
+
+                    }).catch(err => {
+                        this.globalLoader.hideLoader()
+                    })
+                }
+            }
+        })
+    }
 
     const renderFooter = () => {
         return (
@@ -64,12 +81,12 @@ const Home2 = ({ navigation }) => {
 
     const ItemView = ({ item }) => {
         return (
-            <Text
-                style={styles.itemStyle}
-                onPress={() => { isRefreshing == false ? getItem(item) : null }}>
-                {item.name}
-                {'.'}
-            </Text>
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={styles.itemStyle}>
+                    {item.brand}
+                </Text>
+                <LoadImage style={{ height: 200, width: 200, resizeMode: 'contain' }} source={{ uri: item.thumbnail }} />
+            </View>
         );
     };
 

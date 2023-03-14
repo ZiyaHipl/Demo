@@ -22,6 +22,12 @@ export default class Helper extends React.Component {
     static country_list = '';
     static cartcount = 0
     static notificationCount = 0
+    static globalLoader;
+    static UserInfo;
+    static UpadateUserData;
+    static user_id;
+    static token = {};
+
 
     static getFormData(obj) {
         let formData = new FormData();
@@ -31,16 +37,16 @@ export default class Helper extends React.Component {
         return formData;
     }
 
+    static registerLoader(mainApp) {
+        Helper.globalLoader = mainApp;
+    }
+
     constructor(props) {
         super(props)
     }
 
     static registerNavigator(ref) {
         Helper.navigationRef = ref;
-    }
-
-    static registerLoader(mainApp) {
-        Helper.mainApp = mainApp;
     }
 
     static registerLoged(mainApp) {
@@ -159,6 +165,7 @@ export default class Helper extends React.Component {
 
     static async makeRequest({ url, data, method = "POST", loader = true }) {
         let finalUrl = Config.baseurl + url;
+        // let finalUrl = Config.baseurl + url;
         console.log(finalUrl, "finalUrl");
         let form;
         let methodnew;
@@ -255,7 +262,8 @@ export default class Helper extends React.Component {
                 varheaders = {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
-                    "Authorization": 'Token ' + token,
+                    "Authorization": 'Token ',
+                    // "Authorization": 'Token ' + token,
                 }
             } else {
                 varheaders = {
@@ -277,13 +285,22 @@ export default class Helper extends React.Component {
             })
             .then((responseJson) => {
                 console.log(responseJson, "=====+++++responseJson2343")
-                if (responseJson.code == 401) {
-                    AsyncStorage.removeItem('userdata');
-                    AsyncStorage.removeItem('token');
+                if (responseJson.status == 400) {
+                    AsyncStorage.removeItem("token");
+                    AsyncStorage.removeItem('userdata')
+                    Helper.user_id = ''
+                    Helper.UserInfo = ''
                     Helper.navigationRef.reset({
                         index: 0,
-                        routes: [{ name: "AfterLogout" }],
+                        routes: [{ name: "Login" }],
                     });
+                    Helper.globalLoader.hideLoader()
+                    // AsyncStorage.removeItem('userdata');
+                    // AsyncStorage.removeItem('token');
+                    // Helper.navigationRef.reset({
+                    //     index: 0,
+                    //     routes: [{ name: "AfterLogout" }],
+                    // });
                     // AsyncStorage.removeItem("is_social");
                     // this.showToast(responseJson.error);
                 } else
@@ -439,6 +456,8 @@ export default class Helper extends React.Component {
 
         return correctContactNumber.replace(/[^0-9]/g, "")
     }
+
+
 
 }
 

@@ -74,7 +74,7 @@ export default class ActiveTabs extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <Tab.Navigator
-          tabBarOptions={{
+          screenOptions={{
             style: {
               height: 50,
             },

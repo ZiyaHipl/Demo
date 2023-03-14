@@ -1,36 +1,23 @@
-import React, { useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import messaging from '@react-native-firebase/messaging';
-// import PushNotification from "react-native-push-notification";
-import Home from './Src/Home';
-import Home2 from './Src/Home2';
-import BottomTab from './Src/BottomTab'
+import React from 'react';
+import { StyleSheet, View, } from 'react-native';
+import LoginNavigator from './Src/Navigation/LoginNavigator'
+import ActivityIndicatorApp from './Src/Component/Lib/ActivityIndicatorApp';
+import Helper from './Src/Component/Lib/Helper';
 
-const Stack = createNativeStackNavigator();
+export default class App extends React.Component {
+  render() {
+    console.disableYellowBox = true
+    return (
+      <View style={{ flex: 1, }}>
+        <LoginNavigator />
+        <ActivityIndicatorApp
+          onRef={ref => { Helper.globalLoader = ref }}
+        />
+      </View>
+    )
+  }
+}
 
-const App = ({ navigation }) => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="BottomTab"
-          component={BottomTab}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Home2"
-          component={Home2}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+const styles = StyleSheet.create({
 
-export default App;
+});

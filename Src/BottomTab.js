@@ -36,12 +36,12 @@ const RenderTabIcons = (props) => {
     </View>
   );
 };
-const ActiveNavigator = createNativeStackNavigator();
-function stackNavigatorActive() {
+const HomeNavigator = createNativeStackNavigator();
+function stackNavigatorHome() {
   return (
-    <ActiveNavigator.Navigator>
-      <ActiveNavigator.Screen name="Home" component={Home} options={{ headerShown: false }} />
-    </ActiveNavigator.Navigator>
+    <HomeNavigator.Navigator>
+      <HomeNavigator.Screen name="Home" component={Home} options={{ headerShown: false, }} />
+    </HomeNavigator.Navigator>
   );
 }
 const OrdersNavigator = createNativeStackNavigator();
@@ -52,12 +52,12 @@ function stackNavigatorOrders() {
     </OrdersNavigator.Navigator>
   );
 }
-const EarningNavigator = createNativeStackNavigator();
-function stackNavigatorEarning() {
+const AdddFevNavigator = createNativeStackNavigator();
+function stackNavigatorAdddFev() {
   return (
-    <EarningNavigator.Navigator>
-      <EarningNavigator.Screen name="Home" component={Home} options={{ headerShown: false }} />
-    </EarningNavigator.Navigator>
+    <AdddFevNavigator.Navigator>
+      <AdddFevNavigator.Screen name="Home" component={Home} options={{ headerShown: false }} />
+    </AdddFevNavigator.Navigator>
   );
 }
 const AccountNavigator = createNativeStackNavigator();
@@ -82,7 +82,7 @@ export default class ActiveTabs extends React.Component {
         >
           <Tab.Screen
             name="Active"
-            component={stackNavigatorActive}
+            component={stackNavigatorHome}
             options={{
               tabBarLabel: "",
               tabBarIcon: ({ focused }) => {
@@ -114,7 +114,7 @@ export default class ActiveTabs extends React.Component {
           />
           <Tab.Screen
             name="Earnings"
-            component={stackNavigatorEarning}
+            component={stackNavigatorAdddFev}
             options={{
               tabBarLabel: "",
               tabBarIcon: ({ focused }) => {

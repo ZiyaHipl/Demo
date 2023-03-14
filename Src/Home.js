@@ -13,11 +13,12 @@ const Home = () => {
             Alert.alert('okay')
         } else {
             setName('');
-            artists.unshift({
+            artists.push({
                 id: nextId++,
                 name: name,
             })
         }
+        console.log('artistsartistsartistsartists', artists);
     }
 
     return (

@@ -9,15 +9,15 @@ const Home = () => {
     const [artists, setArtists] = useState([]);
 
     const onAddItem = () => {
-        if (name == '') {
-            Alert.alert('okay')
-        } else {
+        // if (name == '') {
+        //     Alert.alert('okay')
+        // } else {
             setName('');
             artists.push({
                 id: nextId++,
                 name: name,
             })
-        }
+        // }
         console.log('artistsartistsartistsartists', artists);
     }
 

@@ -84,6 +84,7 @@ export default class ActiveTabs extends React.Component {
             name="Active"
             component={stackNavigatorHome}
             options={{
+              headerShown: false,
               tabBarLabel: "",
               tabBarIcon: ({ focused }) => {
                 return (

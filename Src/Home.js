@@ -1,39 +1,73 @@
 import React from 'react';
-import { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, FlatList } from 'react-native';
 
 let nextId = 0;
 
-const Home = () => {
+const Home = ({ navigation }) => {
     const [name, setName] = useState('');
     const [artists, setArtists] = useState([]);
 
     const onAddItem = () => {
-        // if (name == '') {
-        //     Alert.alert('okay')
-        // } else {
+        if (name == '') {
+            Alert.alert('okay')
+        } else {
             setName('');
             artists.push({
                 id: nextId++,
                 name: name,
             })
-        // }
+        }
         console.log('artistsartistsartistsartists', artists);
+    }
+
+
+    // this.focusListener = this.props.navigation.addListener("focus", () => {
+    //     Helper.getData('userdata').then((responseData) => {
+    //       if (responseData === null || responseData === 'undefined' || responseData === '') {
+    //         return;
+    //       }
+    //       this.setState({
+    //         userdata: responseData,
+    //         Fname: responseData.first_name,
+    //         Lname: responseData.last_name,
+    //         mobile: responseData.mobile,
+    //         email: responseData.email,
+    //         startdate: responseData.dob,
+    //         imagesPath:responseData.profile_image
+    //       }, () => { console.log("============>userdatatata", JSON.stringify(responseData)) })
+    //     })
+    //   })
+
+    const addarray = ({ item, index }) => {
+        return (
+            <TouchableOpacity onPress={() => { }}>
+                <Text>{item.name}</Text>
+            </TouchableOpacity>
+        )
     }
 
     return (
         <View style={styles.screen}>
             <View style={{ marginHorizontal: 20 }}>
-                {
+                {/* {
                     artists.map((item, index) => (
                         <Text key={index}>{item.name}</Text>
                     ))
-                }
-                <TextInput
-                    placeholder='Add Name'
-                    onChangeText={(e) => { setName(e) }}
-                    value={name}
+                } */}
+                <FlatList
+                    renderItem={addarray}
+                    data={artists}
+                    keyExtractor={(item, index) => index.toString()}
                 />
+                <TextInput
+                    placeholder='Name Add'
+                    value={name}
+                    onChangeText={(e) => { setName(e) }}
+                />
+                <TouchableOpacity onPress={() => { navigation.navigate('Login')}}>
+                    <Text>Hello</Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => { onAddItem() }}>
                     <Text>Add Item</Text>
                 </TouchableOpacity>

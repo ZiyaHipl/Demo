@@ -28,7 +28,7 @@ android {
         abi {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
-            universalApk false  // If true, also generate a universal APK
+            universalApk false
             include (*reactNativeArchitectures())
         }
     }
